@@ -26,7 +26,7 @@ def run_mirror(mirror: MirrorDefinition, package: str, artifact_version: str):
 
 def download_package(mirror, package, artifact_version):
     """
-    Download packages from source remote repository to local and considering classifiers..
+    Download packages from source remote repository to local and considering classifiers.
 
     :param mirror:
     :param package:
@@ -68,7 +68,7 @@ def maven_get_package(mirror, artifact, source_settings_xml):
 
 def publish_package(mirror, package, artifact_version):
     """
-    Method to publish a jar version of an artifact to a remote repository including the configured classifiers.
+    Method to publish a version of an artifact to a remote repository including the configured classifiers.
 
     :param artifact_version:
     :param mirror:
@@ -89,14 +89,13 @@ def publish_package(mirror, package, artifact_version):
     else:
         target_settings_xml = path.realpath(target_settings_xml)
     for package_type in ["pom", "jar"]:
-        tmp_file = create_tmp_file(local_jar_path, "jar")
+        tmp_file = create_tmp_file(local_jar_path, package_type)
         try:
             cmd = (f"mvn org.apache.maven.plugins:maven-deploy-plugin:{deploy_plugin_version}:deploy-file "
                    f"-s \"{target_settings_xml}\" "
                    f"-Durl=\"{mirror.toURL}\" "
-                   f"-Dartifact=\"{package}:{artifact_version}\" "
+                   f"-Dartifact=\"{package}:{artifact_version}:{package_type}\" "
                    f"-Dtransitive={mirror.transitive} "
-                   f"-Dpackaging={package_type} "
                    f"-Dfile=\"{tmp_file}\" "
                    f"-DrepositoryId={mirror.toRepositoryId}")
             run_command(cmd)
@@ -119,9 +118,8 @@ def publish_package(mirror, package, artifact_version):
             cmd = (f"mvn org.apache.maven.plugins:maven-deploy-plugin:{deploy_plugin_version}:deploy-file "
                    f"-s \"{target_settings_xml}\" "
                    f"-Durl=\"{mirror.toURL}\" "
-                   f"-Dartifact=\"{package}:{artifact_version}\" "
+                   f"-Dartifact=\"{package}:{artifact_version}:{package_type}\" "
                    f"-Dtransitive={mirror.transitive} "
-                   f"-Dpackaging={package_type} "
                    # f"-Dtypes=jar,pdf,html "
                    f"-Dfile=\"{tmp_file}\" "
                    f"-DrepositoryId={mirror.toRepositoryId} "
