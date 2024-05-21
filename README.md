@@ -1,16 +1,17 @@
 # maven-repo-mirror
 
 Mirror packages of a remote Maven repository to your local repository
-(usually in `~/.m2/`) or to another remote maven repository.
+(usually in `~/.m2/`) or to another remote Maven repository.
 
-How it works: This tool executes native `mvn` commands using `maven-deploy-plugin:deploy-file`
-and `maven-deploy-plugin:deploy-file`.
+How it works: 
+  - This tool executes native `mvn` commands using `maven-dependency-plugin:get`
+and `maven-deploy-plugin:deploy-file` in standalone mode - without using a project's `pom.xml`.
+  - Fine-grained configuration options in `config.yml` (+ documentation).
+  - Run multiple mirror scenarios at once
 
-Fine-grained configuration options in `config.yml` (+ documentation).
+Tested with GitLab Maven Repository and AWS CodeArtifact with Python 3.11+.
 
-Tested with GitLab Maven Repository and AWS CodeArtifact.
-
-Quality: Alpha
+Quality: `Alpha`
 
 ## Getting started
 
@@ -32,6 +33,8 @@ Copy and edit `config.yml`.
 - You need to setup authentication to the source repository via a `customHeaders` configuration property, e.g. by
   defining a `Authorization` header
 - You can provide authentication for source and target repository with `settings.xml` files
+
+Evaluate that connections to remote repositories are working.
 
 ### Run
 
