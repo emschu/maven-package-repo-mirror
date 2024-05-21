@@ -11,7 +11,7 @@ and `maven-deploy-plugin:deploy-file` in standalone mode - without using a proje
 
 Tested with GitLab Maven Repository and AWS CodeArtifact with Python 3.11+.
 
-Quality: `Alpha`
+**Quality:** `Alpha`
 
 ## Getting started
 
@@ -31,13 +31,13 @@ Copy and edit `config.yml`.
 #### Authentication
 
 - You need to setup authentication to the source repository via a `customHeaders` configuration property, e.g. by
-  defining a `Authorization` header
-- You can provide authentication for source and target repository with `settings.xml` files
+  defining an `Authorization` header.
+- You can provide authentication for source and target repository using `settings.xml` files.
 
 Evaluate that connections to remote repositories are working.
 
 ### Run
 
 ```console
-python mirror.py -c your_config.yml
+python mirror.py -c your_config_file.yml
 ```
