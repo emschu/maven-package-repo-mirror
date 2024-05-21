@@ -1,0 +1,5 @@
+.m2
+venv
+.idea
+.orig
+__pycache__

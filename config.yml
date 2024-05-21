@@ -1,0 +1,64 @@
+defaults:
+  # relative or absolute path to a maven settings.xml
+  fromMavenSettings: ./.m2/settings.xml
+  # name of the repository in provided settings.xml
+  fromMavenRepositoryId: gitlab-maven
+  # relative or absolute path to a maven settings.xml
+  toMavenSettings: ./.m2/settings.xml
+  # name of the repository in provided settings.xml
+  toRepositoryId: gitlab-maven
+  # additional http header map, use this for authentication
+  customHeader:
+  # NAME:VALUE, e.g. Authorization:Basic basicAuthString
+
+  # raw python regex for semantic versioning, the first and last quotes are escaped for yaml parser
+  versionFilterPattern: \"^.*\\d+\.\\d+\.\\d+(:?-SNAPSHOT)?$\"
+  classifier:
+    # <maven classifier>[:package type], e.g. sources:jar or
+    - "sources:jar"
+    - "debug:jar"
+  types: jar,pdf,html
+  # boolean, this flag controls if packages are pushed to the remote repository
+  enableRemoteSync: false
+  # boolean, transitive dependency resolution during get/deploy
+  transitive: true
+  # integer, limit amount of versions after descending alphabetical sort of versions.
+  # Numbers smaller than 1 mean indefinite depth.
+  syncDepth: 0
+
+mirrors:
+  - fromURL: https://example.maven.repo/packages/maven
+    # or use "local" for "toUrl"
+    toURL: https://other-example.maven.repo/packages/maven
+
+  # Examples
+
+  # gitlab package mirror to local repository example
+  - fromURL: https://git.example.com/api/v4/projects/<ID>/packages/maven
+    #toURL: local
+    toURL: https://git.example.com/api/v4/projects/<ID>/packages/maven
+    # override default
+    versionFilterPattern:
+    enableRemoteSync: true
+    classifier:
+      - "sources:jar"
+      - "javadoc:jar"
+    customHeader:
+      PRIVATE-TOKEN: <personal-access-token>
+    packages:
+      - "com.example.java:core"
+
+  # codeartifact example
+  #  - fromURL: https://mvn-987654321.d.codeartifact.eu-central-1.amazonaws.com/maven/libraries
+  #    toURL: https://maven-123546789.d.codeartifact.eu-central-1.amazonaws.com/maven/libraries
+  #    fromMavenSettings: ./m2/settings.xml
+  #    toMavenSettings: ./m2/settings.xml
+  #    toRepositoryId: maven-settings-repository-id
+  #    enableRemoteSync: true
+  #    packages:
+  #      - com.example.test:test-artifact
+  #      - com.example.test:test-artifact2
+  #      - com.example.test:test-artifact3
+
+mavenDependencyPluginVersion: 3.6.0
+mavenDeployPluginVersion: 3.1.2
