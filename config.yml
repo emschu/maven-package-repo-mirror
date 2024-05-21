@@ -33,7 +33,7 @@ mirrors:
 
   # Examples
 
-  # gitlab package mirror to local repository example
+  # GitLab package mirror to local repository example
   - fromURL: https://git.example.com/api/v4/projects/<ID>/packages/maven
     #toURL: local
     toURL: https://git.example.com/api/v4/projects/<ID>/packages/maven
@@ -48,17 +48,26 @@ mirrors:
     packages:
       - "com.example.java:core"
 
-  # codeartifact example
-  #  - fromURL: https://mvn-987654321.d.codeartifact.eu-central-1.amazonaws.com/maven/libraries
-  #    toURL: https://maven-123546789.d.codeartifact.eu-central-1.amazonaws.com/maven/libraries
-  #    fromMavenSettings: ./m2/settings.xml
-  #    toMavenSettings: ./m2/settings.xml
-  #    toRepositoryId: maven-settings-repository-id
-  #    enableRemoteSync: true
-  #    packages:
-  #      - com.example.test:test-artifact
-  #      - com.example.test:test-artifact2
-  #      - com.example.test:test-artifact3
+  # AWS CodeArtifact example - mirror packages from repo A to B
+  - fromURL: https://maven-123456789.d.codeartifact.eu-central-1.amazonaws.com/maven/project-libraries
+    toURL: https://maven-987654321.d.codeartifact.eu-central-1.amazonaws.com/maven/project-libraries
+    fromMavenSettings: ./.m2/settings.xml
+    fromMavenRepositoryId: projectXY-codeartifact
+    toMavenSettings: ./.m2/settings_new.xml
+    toRepositoryId: projectXY-codeartifact
+    customHeader:
+      Authorization: Bearer eyJ2ZXI...
+    versionFilterPattern:
+    classifier:
+      - "sources:jar"
+    types: jar,pdf,html
+    enableRemoteSync: true
+    transitive: true
+    syncDepth: 0
+    packages:
+      - "com.example.project:project-core"
+      - "com.example.project:project-test"
+      - "com.example.project:project-libraryXY"
 
 mavenDependencyPluginVersion: 3.6.0
 mavenDeployPluginVersion: 3.1.2
