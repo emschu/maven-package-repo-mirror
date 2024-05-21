@@ -27,6 +27,7 @@ def run_command(command):
 
 
 def create_tmp_file(src_path, package_type) -> str:
-    tmp_path = os.path.join(tempfile.gettempdir(), "maven-repo-mirror-tmp-" + uuid.uuid4().hex + "." + package_type)
+    tmp_path = os.path.join(tempfile.gettempdir(), "maven-repo-mirror-tmp-" + uuid.uuid4().hex + "."
+                            + (package_type if package_type != "pom" else "xml"))
     shutil.copy2(src_path, tmp_path)
     return tmp_path
