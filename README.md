@@ -4,28 +4,27 @@ Python command line script to mirror packages of a remote Maven repository to yo
 (`~/.m2/`) or to another remote target.
 
 How it works: 
-  - This tool executes native `mvn` commands using `maven-dependency-plugin:get`
+  - This tool executes `mvn` commands using `maven-dependency-plugin:get`
 and `maven-deploy-plugin:deploy-file` in standalone mode - without using a project's `pom.xml`.
-  - Fine-grained configuration options in `config.yml` (+ documentation).
-  - Run multiple mirror scenarios at once
+  - Fine-grained configuration options: See examples in [`example_config.yml`](./example_config.yml).
+  - Run multiple mirror scenarios sequentially.
+  - Useful in migration, backup or development scenarios.
   - So far tested with GitLab Maven Repository and AWS CodeArtifact with Python 3.11+.
-
 
 **Quality:** `Alpha`
 
 
 ## Getting started
 
+Get this repository.
+
 ### Requirements
 
 - `mvn`
-- Install `pyyaml`:
+- Install `pyyaml`: `python -m pip install --user pyyaml`
 
-```console
-python -m pip install --user pyyaml
-```
 
-### Configure mirror settings
+### Configure Maven Mirror Settings
 
 Copy [`example_config.yml`](./example_config.yml) file and define your own package mirror settings.
 
@@ -38,10 +37,14 @@ Copy [`example_config.yml`](./example_config.yml) file and define your own packa
 
 Evaluate that connections to remote repositories are working.
 
-### Run
+## Run
 
 ```console
 python mirror.py -c your_config_file.yml
 ```
 
-License: GPLv3
+### Contributing
+
+License: GPL v3
+
+Contributions are welcome!
